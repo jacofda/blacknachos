@@ -10,10 +10,13 @@ php bin/console doctrine:fixtures:load
 
 POST /api/login
 
-@Route("/api/article", methods={"GET","HEAD"})          -> index
-@Route("/api/article", methods={"POST"})                -> new
-@Route("/api/article/{id}", methods={"POST"})           -> update
-@Route("/api/article/{id}", methods={"GET","HEAD"})     -> show
+| url | method | function | 
+| :---: | :---: | :---: |
+| api/article | GET | index |
+| api/article | POST | new |
+| api/article/{id} | POST | update |
+| api/article/{id} | GET | show |
+| api/article/{id} | DELETE | destroy |
 
 # WEB Routes
 

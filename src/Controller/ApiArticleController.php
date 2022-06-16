@@ -217,5 +217,20 @@ class ApiArticleController extends AbstractController
        ]);
     }
 
+    /**
+     * @Route("/api/article/{id}", methods={"DELETE"})
+     */
+    public function destroy(int $id, ArticleRepository $articleRepository): Response
+    {   
+        $article = $articleRepository->find($id);
+        $articleRepository->remove($article, true);
+
+        return $this->json([
+            'data'  => 'OK'
+       ]);
+
+    }
+
+
 
 }
