@@ -27,7 +27,7 @@ class ApiLoginController extends AbstractController
                 ], Response::HTTP_UNAUTHORIZED);
             }
             
-            $token = 'ciaorandomtoken';
+            $token = $userRepository->getValidTokenOfUser($user)->getToken();
 
             return $this->json([
                  'token' => $token,

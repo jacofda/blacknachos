@@ -19,6 +19,10 @@ class Token
     #[ORM\Column(type: 'datetime_immutable')]
     private $expired_at;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tokens')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +48,18 @@ class Token
     public function setExpiredAt(\DateTimeImmutable $expired_at): self
     {
         $this->expired_at = $expired_at;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

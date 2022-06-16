@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Token;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Token>
@@ -39,20 +40,46 @@ class TokenRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Token[] Returns an array of Token objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+
+    public function setNewTokenForUser(User $user) : Token
+    {   
+        $token = new Token();
+            $token->setUser($user);
+            $token->setToken($this->generateRandomString());
+            $token->setExpiredAt((new \DateTimeImmutable())->modify('+1 week'));
+
+        $this->add($token, true);
+        return $token;
+    }
+
+    public function generateRandomString($length = 20) : string
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+      
+
+   /**
+    * @return token with expiring gte now
+    */
+   public function latestValidToken($value): ?Token
+   {
+       return $this->createQueryBuilder('t')
+           ->andWhere('t.user = :val')
+           ->andWhere('t.expired_at > :date')
+           ->setParameter('val', $value)
+           ->setParameter('date', new \DateTimeImmutable())
+           ->orderBy('t.id', 'DESC')
+           ->setMaxResults(1)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?Token
 //    {
