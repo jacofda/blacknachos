@@ -15,4 +15,10 @@ return [
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
     SymfonyCasts\Bundle\VerifyEmail\SymfonyCastsVerifyEmailBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
+    Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
+    Sonata\BlockBundle\SonataBlockBundle::class => ['all' => true],
+    Sonata\AdminBundle\SonataAdminBundle::class => ['all' => true],
+    Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle::class => ['all' => true],
+    Sonata\Form\Bridge\Symfony\SonataFormBundle::class => ['all' => true],
+    Sonata\Twig\Bridge\Symfony\SonataTwigBundle::class => ['all' => true],
 ];
