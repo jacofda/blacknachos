@@ -20,5 +20,5 @@ POST /api/login
 
 # WEB Routes
 
-to do
+added Sonata Admin (Category and Article), admin/dashboard
 
